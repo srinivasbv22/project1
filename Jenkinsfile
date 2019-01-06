@@ -3,7 +3,7 @@ node {
 	def mvnHome
 	def server =Artifactory.server 'azure_art'
 	try{
-		1stage('Preparation') {
+		2stage('Preparation') {
 			git 'https://github.com/srinivasbv22/project1.git'
 
 			mvnHome = tool 'Maven'
