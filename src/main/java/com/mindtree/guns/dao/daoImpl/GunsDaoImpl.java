@@ -15,7 +15,7 @@ public class GunsDaoImpl implements GunsDao  {
 	private HibernateTemplate hibernateTemplate;
 
 	public String add(Guns gun){
-		hibernateTemplate.save(gun);
+		hibernateTemplate.saveOrUpdate(gun);
 		return "Success";
 	}
 
