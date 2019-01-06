@@ -8,7 +8,7 @@
 		<input type="submit" value="Delete Gun" /> 
 	</form>
 	<form action="getAllGuns.html" >
-		<input type="submit" value="Get All Gun By Id" /> 
+		<input type="submit" value="Get All Guns" /> 
 	</form>
 	<form action="getByName1.html" >
 		<input type="submit" value="Get By Gun Id" /> 
