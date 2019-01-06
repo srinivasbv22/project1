@@ -44,30 +44,10 @@ node {
 	catch(err)
 	{
 		currentBuild.result = 'FAILURE'
-				mail bcc: '', body:"${err}", cc: '', from: '', replyTo: '', subject: 'job failed', to: 'srinivasbv22@gmail.com'
-
-					stage('JIRA Issue') {
-			withEnv(['JIRA_SITE=Jira1']) {
-				def testIssue = [fields: [ project: [key: 'DIS'],
-				                           summary: 'New JIRA Created from Jenkins.',
-				                           description: 'New JIRA Created from Jenkins.',
-				                           issuetype: [name: 'Bug']]]
-
-				                        		   response = jiraNewIssue issue: testIssue
-
-				                        		   echo response.successful.toString()
-				                        		   echo response.data.toString()
-				                        		   jiraComment body: 'Build sucess', issueKey: 'DIS-2'
-
-			}
-			withEnv(['JIRA_SITE=Jira1']) {
-				jiraAssignIssue idOrKey: 'DIS-2', userName: 'devopsguy.mayank'
-			}
-
-		}
+		mail bcc: '', body:"${err}", cc: '', from: '', replyTo: '', subject: 'Job failed', to: 'srinivasbv22@gmail.com'
 	}
 	stage('JIRA') {
-        withEnv(['JIRA_SITE=jira1']) {
+        withEnv(['JIRA_SITE=Jira1']) {
             if(currentBuild.result == 'FAILURE'){
                 if(currentBuild.previousBuild.result!='FAILURE'){
                     def testIssue = [fields: [ project: [key: 'PROJ'],
@@ -108,11 +88,4 @@ node {
             }
         }
    }
-   
-   
-
-	
-	
-	
-
 }
