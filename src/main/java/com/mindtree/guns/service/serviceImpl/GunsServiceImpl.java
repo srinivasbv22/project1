@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mindtree.guns.dao.GunsDao;
 import com.mindtree.guns.entity.Guns;
-import com.mindtree.guns.exception.DaoException;
-import com.mindtree.guns.exception.ServiceException;
 import com.mindtree.guns.service.GunsService;
 
 @Component

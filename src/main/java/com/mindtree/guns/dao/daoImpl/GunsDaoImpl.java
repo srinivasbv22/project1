@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mindtree.guns.dao.GunsDao;
 import com.mindtree.guns.entity.Guns;
-import com.mindtree.guns.exception.DaoException;
 @Repository
 public class GunsDaoImpl implements GunsDao  {
 	

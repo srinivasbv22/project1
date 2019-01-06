@@ -1,6 +1,9 @@
 package com.mindtree.guns.exception;
 
 public class ServiceException extends Exception{
+
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String getMessage() {
 		System.out.println("Service Exception");
