@@ -11,6 +11,7 @@
 		
 		
         <fieldset >
+        	<legend>Enter the details</legend>
             <table>
                 
                 <tr>

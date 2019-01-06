@@ -24,6 +24,6 @@
 	
 	</table>
 	<br>
-	<a href="index.html">Index</a>
+	<a href="../../index.html">Index</a>
 </body>
 </html>

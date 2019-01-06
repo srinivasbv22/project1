@@ -1,4 +1,9 @@
+<!DOCTYPE html>
 <html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Index Page</title>
+</head>
 <body>
 	<h2>WELCOME TO Guns Smuggling!</h2>
 	<form action="addPage1.html" >
