@@ -66,9 +66,8 @@ node {
 
 		}
 	}
-	
 	stage('JIRA') {
-        withEnv(['JIRA_SITE=my_jira']) {
+        withEnv(['JIRA_SITE=jira1']) {
             if(currentBuild.result == 'FAILURE'){
                 if(currentBuild.previousBuild.result!='FAILURE'){
                     def testIssue = [fields: [ project: [key: 'PROJ'],
@@ -109,6 +108,7 @@ node {
             }
         }
    }
+   
    
 
 	
