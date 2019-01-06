@@ -3,7 +3,7 @@ node {
 	def mvnHome
 	def server =Artifactory.server 'azure_art'
 	try{
-		stage('Preparation') {
+		1stage('Preparation') {
 			git 'https://github.com/srinivasbv22/project1.git'
 
 			mvnHome = tool 'Maven'
@@ -46,5 +46,47 @@ node {
 		currentBuild.result = 'FAILURE'
 		mail bcc: '', body:"${err}", cc: '', from: '', replyTo: '', subject: 'Job failed', to: 'srinivasbv22@gmail.com'
 	}
+	stage('JIRA') {
+        withEnv(['JIRA_SITE=Jira1']) {
+            if(currentBuild.result == 'FAILURE'){
+                if(currentBuild.previousBuild.result!='FAILURE'){
+                    def testIssue = [fields: [ project: [key: 'PROJ'],
+                                 summary: 'Build Fail',
+                                 description: 'Build has failed for the project 1  application.',
+                                 issuetype: [name: 'Bug']]]
+
+                    response = jiraNewIssue issue: testIssue
+
+                    echo response.successful.toString()
+                    echo response.data.toString()
+                    env.PROJ_ISSUE=response.data.key
+                    echo env.PROJ_ISSUE
+                    jiraAssignIssue idOrKey: env.PROJ_ISSUE, userName: 'anoopjainduplicate'
+					
+                    sh 'echo $PROJ_ISSUE > /var/lib/jenkins/jiraissue'
+                }
+                else if(currentBuild.previousBuild.result=='FAILURE'){
+                    def issue=readFile '/var/lib/jenkins/jiraissue'
+                    issue=issue.trim()
+                    echo issue
+                    jiraAddComment idOrKey:issue, comment: 'Build is failed again'
+                }
+            }
+            else if(currentBuild.previousBuild.result=='FAILURE'){
+                def transitionInput =
+                [
+                    transition: [
+                        id: '41'
+                    ]
+                ]
+                def issue=readFile '/var/lib/jenkins/jiraissue'
+                    issue=issue.trim()
+                jiraTransitionIssue idOrKey:issue, input: transitionInput
+                
+                jiraAddComment idOrKey:issue, comment: 'Build is successful' 
+                
+            }
+        }
+   }
 	
 }
