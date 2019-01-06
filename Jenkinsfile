@@ -66,20 +66,53 @@ node {
 
 		}
 	}
-	stage('JIRA Transition') {
-		if(currentBuild.result == 'SUCCESS'){
-			withEnv(['JIRA_SITE=Jira1']) {
+	
+	stage('JIRA') {
+        withEnv(['JIRA_SITE=my_jira']) {
+            if(currentBuild.result == 'FAILURE'){
+                if(currentBuild.previousBuild.result!='FAILURE'){
+                    def testIssue = [fields: [ project: [key: 'PROJ'],
+                                 summary: 'Build Fail',
+                                 description: 'Build has failed for the project 1  application.',
+                                 issuetype: [name: 'Bug']]]
 
-				def transitionInput =
-						[
-						 transition: [
-						              id: '31'
-								     ]
-					    ]
+                    response = jiraNewIssue issue: testIssue
 
-				jiraTransitionIssue idOrKey: 'DIS-2', input: transitionInput
-			}
-		}
-	}
+                    echo response.successful.toString()
+                    echo response.data.toString()
+                    env.PROJ_ISSUE=response.data.key
+                    echo env.PROJ_ISSUE
+                    jiraAssignIssue idOrKey: env.PROJ_ISSUE, userName: 'anoopjainduplicate'
+					
+                    sh 'echo $PROJ_ISSUE > /var/lib/jenkins/jiraissue'
+                }
+                else if(currentBuild.previousBuild.result=='FAILURE'){
+                    def issue=readFile '/var/lib/jenkins/jiraissue'
+                    issue=issue.trim()
+                    echo issue
+                    jiraAddComment idOrKey:issue, comment: 'Build is failed again'
+                }
+            }
+            else if(currentBuild.previousBuild.result=='FAILURE'){
+                def transitionInput =
+                [
+                    transition: [
+                        id: '41'
+                    ]
+                ]
+                def issue=readFile '/var/lib/jenkins/jiraissue'
+                    issue=issue.trim()
+                jiraTransitionIssue idOrKey:issue, input: transitionInput
+                
+                jiraAddComment idOrKey:issue, comment: 'Build is successful' 
+                
+            }
+        }
+   }
+   
+
+	
+	
+	
 
 }
