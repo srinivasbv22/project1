@@ -11,10 +11,10 @@ node {
 		
 		stage('SonarQube analysis') {
 			sh '''mvn sonar:sonar \
-			-Dsonar.projectKey=srinivasbv22_springmvcworking \
-			-Dsonar.organization=srinivasbv22-github \
-			-Dsonar.host.url=https://sonarcloud.io \
-				-Dsonar.login=7524de46afc7cf6d46296c2f863cbbd9c7e1921e'''
+				  -Dsonar.projectKey=srinivasbv22_project1 \
+				  -Dsonar.organization=srinivasbv22-github \
+				  -Dsonar.host.url=https://sonarcloud.io \
+				  -Dsonar.login=c564dd4a829fc905797d4b17f9873b357bc20518'''
 		}
 
 		stage('Build') {
