@@ -10,13 +10,32 @@ node {
 			mvnHome = tool 'Maven'
 		}
 		//sonarqube analysis
-		stage('SonarQube analysis') {
+		stage('Sonarcloud') {
 			sh '''mvn sonar:sonar \
 				  -Dsonar.projectKey=srinivasbv22_project1 \
 				  -Dsonar.organization=srinivasbv22-github \
 				  -Dsonar.host.url=https://sonarcloud.io \
 				  -Dsonar.login=c564dd4a829fc905797d4b17f9873b357bc20518'''
 		}
+		//sonarqube
+		 stage('SonarQube analysis') {
+		       withSonarQubeEnv('sonarqube1') {
+				   sh '''mvn sonar:sonar \
+			    -Dsonar.host.url=http://40.87.47.38 \
+			    -Dsonar.login=8c19834e275a20c1aa5fa760bf5952d2e9d0949f '''
+		 } 
+		
+		//sonarqube quality gate
+		 stage("Quality Gate"){
+			  timeout(time: 1, unit: 'HOURS') {
+			      def qg = waitForQualityGate()
+			      if (qg.status != 'OK') {
+				   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+				  mail bcc: '', body:"${qg.status}", cc: '', from: '', replyTo: '', subject: 'Quality fail', to: 'srinivasbv22@gmail.com'
+
+			      }
+			  }
+		      }
 		//maven build
 		stage('Build') {
 			sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
