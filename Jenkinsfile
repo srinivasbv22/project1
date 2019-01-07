@@ -23,7 +23,9 @@ node {
 				   sh '''mvn sonar:sonar \
 			    -Dsonar.host.url=http://40.87.47.38 \
 			    -Dsonar.login=8c19834e275a20c1aa5fa760bf5952d2e9d0949f '''
-		 } 
+			}
+		} 
+		
 		
 		//sonarqube quality gate
 		 stage("Quality Gate"){
@@ -124,6 +126,6 @@ node {
 
 		    }
 		}
-	   }
+	}
 	
 }
