@@ -17,7 +17,7 @@ node {
 				  -Dsonar.host.url=https://sonarcloud.io \
 				  -Dsonar.login=c564dd4a829fc905797d4b17f9873b357bc20518'''
 		}
-		/*
+		
 		//sonarqube
 		 stage('SonarQube analysis') {
 		       withSonarQubeEnv('sonarqube1') {
@@ -26,7 +26,7 @@ node {
 			    -Dsonar.login=8c19834e275a20c1aa5fa760bf5952d2e9d0949f '''
 			}
 		} 
-		*/
+		
 		
 		//sonarqube quality gate
 		 stage("Quality Gate"){
