@@ -12,13 +12,12 @@ node {
 		
 		
 		//sonarqube
-		 stage('SonarQube analysis') {
-		       withSonarQubeEnv('sonarqube') {
-				   sh '''mvn sonar:sonar \
-			    -Dsonar.host.url=http://40.87.47.38 \
-			    -Dsonar.login=8c19834e275a20c1aa5fa760bf5952d2e9d0949f '''
+		 stage('Quality Analysis') {
+			withSonarQubeEnv('sonarqube') {
+			sh 'mvn clean package sonar:sonar'
 			}
-		} 
+		    }
+
 		
 		
 		//sonarqube quality gate
