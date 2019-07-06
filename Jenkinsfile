@@ -1,13 +1,13 @@
 node {
 
-	def mvnHome
+	def mvn
 	def server =Artifactory.server 'artifactory'
 	
 		//git fetch
 		stage('Preparation') {
 			git 'https://github.com/srinivasbv22/project1.git'
 
-			mvnHome = tool 'Maven'
+			mvn = tool 'Maven'
 		}
 		
 		
