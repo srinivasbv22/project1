@@ -50,12 +50,7 @@ node {
 			def downloadSpec="""{ "files":[ { "pattern":"project1/guns.war", "target":"/var/lib/jenkins/workspace/project1/" } ] }""" 
 					server.download(downloadSpec)
 		}    
-		//Deployment on tomcat
-		stage ('Final deploy'){
-			sh 'cp  /var/lib/jenkins/workspace/project1/guns.war /home/devopsinfra/'
-		}
 		
-		currentBuild.result == 'SUCCESS'
 	}
 	
 	
